@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Devine — Luxury Perfumes</title>
+  <meta name="description" content="Devine — We provide the best service and best product. Luxury perfumes for intimate moments." />
+  <style>
+    :root{
+      --gold: #b88a00;
+      --black: #0b0b0b;
+      --white: #ffffff;
+      --max-width: 1100px;
+      --radius: 16px;
+      --glass: rgba(255,255,255,0.06);
+    }
+    /* Page layout & background (bg.jpg emphasized / 'bold') */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--white);
+      background: linear-gradient(rgba(6,6,6,0.55), rgba(6,6,6,0.55)), url('bg.jpg') center/cover fixed;
+      /* Emphasize (bold) the background image with contrast and scale */
+      background-blend-mode: multiply;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .wrap{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:28px;
+      display:flex;
+      gap:28px;
+      align-items:flex-start;
+    }
+
+    header.site-header{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .brand .logo{
+      width:72px;
+      height:72px;
+      border-radius:12px;
+      overflow:hidden;
+      flex:0 0 72px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.6);
+      border:2px solid rgba(184,138,0,0.18);
+    }
+    .brand .logo img{width:100%;height:100%;object-fit:cover;display:block;}
+    .brand h1{margin:0;font-size:20px;letter-spacing:1px;}
+    .brand p{margin:0;font-size:12px;color:rgba(255,255,255,0.7);}
+
+    nav.top-nav{display:flex;gap:12px;align-items:center;}
+    nav.top-nav a{
+      color:var(--white);
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:10px;
+      font-size:14px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    nav.top-nav a:hover{background:rgba(255,255,255,0.03); border-color:rgba(184,138,0,0.35)}
+
+    /* Hero + carousel layout */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:start;
+      width:100%;
+    }
+    @media (max-width:900px){
+      .hero{grid-template-columns: 1fr;}
+      .wrap{padding:18px;}
+      .brand .logo{width:56px;height:56px;}
+    }
+
+    .hero-left{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+    }
+    .tagline{
+      color:var(--gold);
+      font-weight:600;
+      letter-spacing:1px;
+      margin-bottom:6px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .hero-left h2{
+      margin:4px 0 12px 0;
+      font-size:28px;
+      line-height:1.02;
+      color:var(--white);
+    }
+    .poem{
+      margin:0 0 18px 0;
+      color:rgba(255,255,255,0.88);
+      font-size:16px;
+    }
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;}
+    .btn{
+      background:var(--gold);
+      color:var(--black);
+      padding:10px 14px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: 0 6px 16px rgba(184,138,0,0.12);
+    }
+    .btn.white{
+      background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .features{
+      display:flex;
+      gap:12px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+    .feature{
+      padding:10px 12px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.02);
+      font-size:13px;
+    }
+
+    /* Right side carousel card */
+    .carousel-card{
+      width:100%;
+      max-width:420px;
+      padding:14px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.48), rgba(0,0,0,0.6));
+      box-shadow: 0 20px 45px rgba(0,0,0,0.7);
+      border:1px solid rgba(255,255,255,0.04);
+      position:relative;
+      overflow:hidden;
+    }
+    .carousel-viewport{
+      width:100%;
+      height:420px;
+      position:relative;
+      overflow:hidden;
+      border-radius:10px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.4));
+    }
+    .slides{
+      display:flex;
+      height:100%;
+      transition: transform 0.8s cubic-bezier(.2,.9,.3,1);
+      will-change: transform;
+    }
+    .slide{
+      min-width:100%;
+      height:100%;
+      display:flex;
+      align-items:end;
+      justify-content:center;
+      position:relative;
+      padding:18px;
+      box-sizing:border-box;
+    }
+    .slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:8px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      transform:translateY(0);
+    }
+    .slide-info{
+      position:absolute;
+      left:18px;
+      bottom:18px;
+      right:18px;
+      color:var(--white);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      font-size:14px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.45));
+      padding:12px;
+      border-radius:10px;
+      backdrop-filter: blur(4px);
+      border:1px solid rgba(255,255,255,0.04);
+    }
+
+    .price{
+      color:var(--gold);
+      font-weight:700;
+      font-size:18px;
+    }
+
+    .carousel-controls{
+      display:flex;
+      gap:8px;
+      position:absolute;
+      bottom:12px;
+      left:12px;
+      z-index:10;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:rgba(255,255,255,0.16);
+      border:1px solid rgba(255,255,255,0.06);
+      cursor:pointer;
+    }
+    .dot.active{background:var(--gold); box-shadow:0 6px 16px rgba(184,138,0,0.16);}
+
+    .carousel-nav{
+      position:absolute;
+      top:12px;
+      right:12px;
+      display:flex;
+      gap:8px;
+      z-index:10;
+    }
+    .nav-btn{
+      background:rgba(255,255,255,0.04);
+      border-radius:10px;padding:8px;display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .nav-btn svg{width:18px;height:18px;fill:var(--white);opacity:0.95}
+
+    /* Contact & footer */
+    .sections{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:20px;
+      margin-top:20px;
+    }
+    @media (max-width:900px){ .sections{grid-template-columns:1fr;} }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      padding:16px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .contact-list{display:flex;flex-direction:column;gap:10px;}
+    .contact-list a{color:var(--white); text-decoration:none; font-weight:600;}
+    .small{font-size:13px;color:rgba(255,255,255,0.7);}
+
+    footer{
+      margin-top:30px;
+      text-align:center;
+      color:rgba(255,255,255,0.6);
+      font-size:13px;
+      padding-bottom:40px;
+    }
+
+    /* subtle floating motion for hero image */
+    .hero-left:before{
+      content:'';
+      position:absolute;
+      width:400px;height:400px;
+      left:-120px;top:-120px;
+      background: radial-gradient(circle at center, rgba(184,138,0,0.06), transparent 40%);
+      filter:blur(40px);
+      transform:rotate(12deg);
+    }
+
+    /* small helper */
+    .muted{opacity:0.75;font-size:13px;color:rgba(255,255,255,0.75);}
+
+    /* accessibility focus */
+    a:focus, button:focus{outline:3px solid rgba(184,138,0,0.25); outline-offset:2px;}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header" role="banner" aria-label="Devine header">
+      <div class="brand">
+        <figure class="logo" aria-hidden="false"><img src="D.jpg" alt="Devine Logo / Display picture"></figure>
+        <div>
+          <h1>Devine</h1>
+          <p class="muted">Essence of memory · Luxury perfumes</p>
+        </div>
+      </div>
+
+      <nav class="top-nav" role="navigation" aria-label="Main navigation">
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+    </header>
+
+    <main style="width:100%;" role="main">
+      <section class="hero" aria-label="Hero with product carousel">
+        <div class="hero-left">
+          <div class="tagline">Devine — Handcrafted moments</div>
+          <h2>Scents that remember you</h2>
+          <p class="poem">A hush of amber at dusk. A single petal on the pillow. Our perfumes are short poems — quiet, precise, unforgettable.</p>
+
+          <div class="cta-row">
+            <a class="btn" href="#products">Explore the Collection</a>
+            <a class="btn white" href="mailto:devinebd.shop@gmail.com">Email Us</a>
+          </div>
+
+          <div class="features" aria-hidden="false">
+            <div class="feature">Curated raw essences</div>
+            <div class="feature">Small-batch blends</div>
+            <div class="feature">Fast shipping — elegant packaging</div>
+          </div>
+
+          <!-- ambient audio player -->
+          <div style="margin-top:18px;display:flex;gap:12px;align-items:center;">
+            <button id="audio-toggle" class="btn white" aria-pressed="false" title="Play ambient sound">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg> Ambient
+            </button>
+            <div class="small muted">Soft ambient loop — click to unmute</div>
+          </div>
+
+        </div>
+
+        <aside class="carousel-card" aria-label="Featured perfumes">
+          <div class="carousel-viewport" id="products" tabindex="0">
+            <div class="slides" id="slides">
+              <div class="slide" data-title="Nocturne" data-price="BDT 3,250">
+                <img src="a.jpg" alt="Nocturne perfume — Devine">
+                <div class="slide-info">
+                  <div>
+                    <div style="font-weight:700">Nocturne</div>
+                    <div class="small">A twilight of amber and oud — memory bottled.</div>
+                  </div>
+                  <div class="price">BDT 3,250</div>
+                </div>
+              </div>
+
+              <div class="slide" data-title="L'Heure" data-price="BDT 2,900">
+                <img src="b.jpg" alt="L'Heure perfume — Devine">
+                <div class="slide-info">
+                  <div>
+                    <div style="font-weight:700">L'Heure</div>
+                    <div class="small">Citrus dawn with a velvet heart.</div>
+                  </div>
+                  <div class="price">BDT 2,900</div>
+                </div>
+              </div>
+
+              <div class="slide" data-title="Fleur Forêt" data-price="BDT 3,450">
+                <img src="c.jpg" alt="Fleur Forêt perfume — Devine">
+                <div class="slide-info">
+                  <div>
+                    <div style="font-weight:700">Fleur Forêt</div>
+                    <div class="small">Green petals and rain-washed wood.</div>
+                  </div>
+                  <div class="price">BDT 3,450</div>
+                </div>
+              </div>
+
+              <div class="slide" data-title="Éclat" data-price="BDT 3,100">
+                <img src="e.jpg" alt="Éclat perfume — Devine">
+                <div class="slide-info">
+                  <div>
+                    <div style="font-weight:700">Éclat</div>
+                    <div class="small">Bright jasmine with a golden trail.</div>
+                  </div>
+                  <div class="price">BDT 3,100</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-controls" aria-hidden="false" id="dots"></div>
+
+            <div class="carousel-nav" aria-hidden="false">
+              <button class="nav-btn" id="prev" aria-label="Previous product">
+                <svg viewBox="0 0 24 24" focusable="false"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+              </button>
+              <button class="nav-btn" id="next" aria-label="Next product">
+                <svg viewBox="0 0 24 24" focusable="false"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+              </button>
+            </div>
+
+          </div>
+
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+            <div class="small muted">Auto-slides every 3s · Tap or use arrows to control</div>
+            <a class="btn white" href="#contact">Get in touch</a>
+          </div>
+
+        </aside>
+      </section>
+
+      <section class="sections" aria-label="Additional content" style="margin-top:18px;">
+        <div class="card" id="about">
+          <h3>About Devine</h3>
+          <p class="small">We provide the best service and best product.</p>
+          <p>Devine is a quiet house of scent — each bottle is a small archive of feeling. We blend with care, package with reverence, and ship with ceremony.</p>
+        </div>
+
+        <div class="card" id="contact">
+          <h3>Contact</h3>
+          <div class="contact-list">
+            <div><strong>Email:</strong> <a href="mailto:devinebd.shop@gmail.com">devinebd.shop@gmail.com</a></div>
+            <div><strong>Phone:</strong> <a href="tel:01315792066">01315792066</a></div>
+            <div><strong>Facebook:</strong> <a href="https://facebook.com/devine22" target="_blank" rel="noopener">facebook.com/devine22</a></div>
+            <div><strong>WhatsApp:</strong> <a href="https://wa.me/8801315792066" target="_blank" rel="noopener">Chat on WhatsApp</a></div>
+            <div class="small muted">Click any link to open. International WhatsApp uses +880 area code for Bangladesh.</div>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column:1/-1;" id="privacy">
+          <h3>Privacy &amp; Policy</h3>
+          <p class="small">Standard perfume brand privacy</p>
+          <p>We collect the minimum information necessary to fulfill orders (name, address, email, phone). We do not sell personal data. Payment information is processed by secure third-party payment processors and is not stored on our servers. For returns, please contact us within 14 days; returned goods must be unopened unless defective. By purchasing you agree to our terms. Contact us at <a href="mailto:devinebd.shop@gmail.com">devinebd.shop@gmail.com</a> for any privacy requests.</p>
+        </div>
+      </section>
+
+      <footer role="contentinfo">
+        <div class="small muted">© <span id="year"></span> Devine — All rights reserved · Crafted with care</div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Ambient audio (muted autoplay allowed, with user toggle) -->
+  <audio id="ambient" loop src="ambient.mp3" preload="auto" aria-hidden="true" style="display:none" muted></audio>
+  <!-- If you don't have ambient.mp3, the button will still work without sound. You can replace ambient.mp3 with any low-volume loop. -->
+
+  <script>
+    // Basic carousel behavior (auto slide + controls + dots + swipe)
+    (function(){
+      const slidesEl = document.getElementById('slides');
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const dotsContainer = document.getElementById('dots');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      let idx = 0;
+      let timer = null;
+      const interval = 3000;
+
+      function makeDots(){
+        slides.forEach((s,i)=>{
+          const d = document.createElement('button');
+          d.className='dot';
+          d.setAttribute('aria-label','Go to slide ' + (i+1));
+          d.addEventListener('click', ()=>{goTo(i); resetTimer();});
+          dotsContainer.appendChild(d);
+        });
+      }
+      function updateDots(){
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+      }
+      function goTo(i){
+        idx = (i+slides.length) % slides.length;
+        slidesEl.style.transform = `translateX(-${idx * 100}%)`;
+        updateDots();
+      }
+      function prev(){ goTo(idx-1); }
+      function next(){ goTo(idx+1); }
+      function resetTimer(){
+        clearInterval(timer);
+        timer = setInterval(()=>{ next(); }, interval);
+      }
+
+      makeDots();
+      updateDots();
+      resetTimer();
+
+      prevBtn.addEventListener('click', ()=>{ prev(); resetTimer(); });
+      nextBtn.addEventListener('click', ()=>{ next(); resetTimer(); });
+
+      // pause on hover/focus for accessibility
+      const viewport = document.querySelector('.carousel-viewport');
+      viewport.addEventListener('mouseenter', ()=> clearInterval(timer));
+      viewport.addEventListener('mouseleave', ()=> resetTimer());
+      viewport.addEventListener('focusin', ()=> clearInterval(timer));
+      viewport.addEventListener('focusout', ()=> resetTimer());
+
+      // swipe support (touch)
+      let startX = null;
+      viewport.addEventListener('touchstart', (e)=> { startX = e.touches[0].clientX; clearInterval(timer); }, {passive:true});
+      viewport.addEventListener('touchend', (e)=> {
+        if (startX === null) return;
+        const dx = (e.changedTouches[0].clientX - startX);
+        if (Math.abs(dx) > 40){
+          if (dx < 0) next(); else prev();
+        }
+        startX = null;
+        resetTimer();
+      });
+
+      // keyboard navigation
+      viewport.addEventListener('keydown', (e)=> {
+        if (e.key === 'ArrowLeft') { prev(); resetTimer(); }
+        if (e.key === 'ArrowRight') { next(); resetTimer(); }
+      });
+
+      // set current year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+
+    // Ambient audio toggle
+    (function(){
+      const audio = document.getElementById('ambient');
+      const btn = document.getElementById('audio-toggle');
+      let playing = false;
+      // attempt autoplay muted (allowed in many browsers)
+      try { audio.play().then(()=>{}).catch(()=>{}); } catch(e){}
+
+      btn.addEventListener('click', ()=>{
+        if (!playing){
+          // unmute and play (requires user gesture)
+          audio.muted = false;
+          audio.play().catch(()=>{});
+          btn.setAttribute('aria-pressed','true');
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 9v6h4l5 5V4L9 9z"/></svg> Stop';
+          playing = true;
+        } else {
+          audio.pause();
+          audio.muted = true;
+          btn.setAttribute('aria-pressed','false');
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg> Ambient';
+          playing = false;
+        }
+      });
+    })();
+
+    // Small progressive enhancement: if ambient.mp3 missing, hide audio button (prevents confusion)
+    (function(){
+      const audio = document.getElementById('ambient');
+      const btn = document.getElementById('audio-toggle');
+      // test if resource exists (can't fetch due to CORS in some contexts) — best-effort:
+      const src = audio.getAttribute('src') || '';
+      if (!src){
+        btn.style.display='none';
+      }
+    })();
+  </script>
+</body>
+</html>
